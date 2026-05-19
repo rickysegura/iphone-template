@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Template</title>
+
+    <meta property="og:title" content="iPhone Template" />
+    <meta name="description" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="public/bg_1.jpeg" />
+    <meta property="og:url" content="https://iphonetemplate.w3spaces.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="iPhone Template" />
+
+    <meta name="twitter:title" content="iPhone Template" />
+    <meta name="twitter:description" content="iPhone Template" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="public/bg_1.jpeg" />
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="cameradiv">
+        <div id="cameratop">
+            <div onclick="turnoffcamera()">back</div>
+            <div id="fl"><img src="icons/nofl.png" alt=""></div>
+            <div id="switchcamera"><img src="icons/switch.png" alt=""></div>
+        </div>
+
+        <video src="" id="videocamera"></video>
+
+        <div id="camerabottom">
+            <div>photos</div>
+            <div id="shot"><img src="icons/cmr.png" alt=""></div>
+            <div>#</div>
+
+        </div>
+
+    </div>
+
+    <div id="iphonediv">
+
+        <div id="top">
+            <div id="topleft">
+                <p>No Service</p>
+            </div>
+            <div id="topmid">
+                <p id="locktime"> <img src="icons/lock.png" alt=""></p>
+
+            </div>
+            <div id="topright">
+                <p>1%</p>
+                <img src="icons/bat.png" alt="">
+            </div>
+        </div>
+
+        <div id="notediv">
+            <div id="notetop">
+                <p onclick="turnoffnote() ">back</p>
+                <p>💞💞💞</p>
+                <p>+</p>
+            </div>
+            <div id="notebgdiv">
+                <div id="notedate">
+                    <p style="font-weight: bold;">Today</p>
+                    <p>March 14th 23:17</p>
+                </div>
+                <p id="note">If ur reading this ily
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div id="unlock">
+            <div id="unlocktop">
+                <p id="time"></p>
+                <p id="date"></p>
+            </div>
+
+            <div id="lockscreen">
+            </div>
+            <div id="unlockbottom">
+                <div id="slide">
+                    <div id="slider"> <img src="icons/arrow.png" draggable="false" alt=""></div>
+                    <p id="unlocktext">slide to unlock</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="main">
+            <div id="appdiv">
+                <a href="https://www.youtube.com" target="_blank"><img src="icons/youtube.png" alt="">
+                    <p>Youtube</p>
+                </a>
+                <a href="https://open.spotify.com/artist/7qtzuOx6vmqfGAdOaiDzeC" target="_blank"><img src="icons/spotify.png" alt="">
+                    <p>Spotify</p>
+                </a>
+                <a href="https://soundcloud.com/myspacemark" target="_blank"><img src="icons/sound.png" alt="">
+                    <p>Soundcloud</p>
+                </a>
+                <a target="_blank"><img src="icons/apps.png" alt="">
+                    <p>App Store</p>
+                </a>
+                <a onclick="turnonnote()" target="_blank"><img src="icons/note.png" alt="">
+                    <p>Notes</p>
+                </a>
+                <a href="https://www.instagram.com" target="_blank"><img src="icons/ig.png" alt="">
+                    <p>Instagram</p>
+                </a>
+                <a target="_blank"><img src="icons/weather.png" alt="">
+                    <p>Weather</p>
+                </a>
+
+                <a href="https://music.apple.com" target="_blank"><img
+                        src="icons/applemusic.png" alt="">
+                    <p>Apple Music</p>
+                </a>
+            </div>
+            <div id="bottomappdiv">
+                <img id="table" src="public/table.png" alt="">
+
+                <a target="_blank"><img src="icons/phone.png" alt="">
+                    <p>Phone</p>
+                </a>
+
+                <a target="_blank"><img src="icons/photo.png" alt="">
+                    <p>Photos</p>
+                </a>
+                <a onclick="turnoncamera()" target="_blank"><img src="icons/camera.png" alt="">
+                    <p>Camera</p>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    const song = document.getElementById("locksong");
+    const songp = document.getElementById("songp");
+
+    function togglesong() {
+
+        if (song.paused) {
+            songp.src = "icons/songp.png";
+
+            song.play();
+        } else {
+            song.pause();
+            songp.src = "icons/songplay.png";
+        }
+    }
+
+    // Array of songs
+    const songs = [
+        "sounds/myspacemark - dolce vita.mp3",
+        "sounds/myspacemark - spring break.mp3",
+        "sounds/myspacemark - Giuseppe.mp3",
+    ];
+
+    let currentSong = 0;
+    const audio = document.getElementById("locksong");
+    const songDesc = document.getElementById("songdescription");
+    songDesc.textContent = songs[currentSong].split("/").pop().replace(/\.mp3$/i, "");
+
+    function songnext(direction) {
+        currentSong += direction;
+        if (currentSong > songs.length) {
+            currentSong = 0;
+        }
+
+        if (currentSong < 0) {
+            currentSong = songs.length - 1;
+        }
+
+        // wrap around the array
+        if (currentSong >= songs.length) currentSong = 0;
+        if (currentSong < 0) currentSong = songs.length - 1;
+
+        // switch song
+        audio.currentTime = 0;
+        songp.src = "icons/songp.png";
+        audio.src = songs[currentSong];
+        audio.play();
+
+        const name = songs[currentSong].split("/").pop().replace(/\.mp3$/i, "");
+        songDesc.textContent = name;
+
+    }
+
+</script>
+
+<script>
+    const songslider = document.getElementById("songsliderdiv");
+    const thumb = document.getElementById("songslider");
+    const fill = document.getElementById("songsliderfill");
+
+    let dragging = false;
+
+    function setSlider(x) {
+        const rect = songslider.getBoundingClientRect();
+        x = Math.max(0, Math.min(x, rect.width));
+
+        thumb.style.left = `${x}px`;
+        fill.style.width = `${x}px`;
+    }
+
+    /* init */
+    window.addEventListener("load", () => {
+        const rect = songslider.getBoundingClientRect();
+        setSlider(rect.width * 0.8);
+    });
+
+    /* pointer down */
+    thumb.addEventListener("pointerdown", (e) => {
+        dragging = true;
+        thumb.setPointerCapture(e.pointerId);
+        e.preventDefault();
+    });
+
+    /* pointer move */
+    songslider.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+
+        const rect = songslider.getBoundingClientRect();
+        setSlider(e.clientX - rect.left);
+    });
+
+    /* pointer up */
+    document.addEventListener("pointerup", () => dragging = false);
+
+    /* tap on bar */
+    songslider.addEventListener("pointerdown", (e) => {
+        const rect = songslider.getBoundingClientRect();
+        setSlider(e.clientX - rect.left);
+    });
+
+</script>
+
+<script>
+
+    //CAPTURE PHOTO
+    const video = document.getElementById("videocamera");
+
+    const shotBtn = document.getElementById("shot");
+
+    // Take screenshot of visible video area
+    shotBtn.addEventListener("click", () => {
+
+        const audio = new Audio('sounds/camera.MP3');
+        audio.play();
+        // Get visible video size
+        const rect = video.getBoundingClientRect();
+        const cw = rect.width;
+        const ch = rect.height;
+
+        const vw = video.videoWidth;
+        const vh = video.videoHeight;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = cw;
+        canvas.height = ch;
+        const ctx = canvas.getContext("2d");
+
+        // Handle object-fit: cover crop
+        const containerRatio = cw / ch;
+        const videoRatio = vw / vh;
+
+        let sx, sy, sw, sh;
+
+        if (videoRatio > containerRatio) {
+            sw = vh * containerRatio;
+            sh = vh;
+            sx = (vw - sw) / 2;
+            sy = 0;
+        } else {
+            sw = vw;
+            sh = vw / containerRatio;
+            sx = 0;
+            sy = (vh - sh) / 2;
+        }
+
+        // Handle mirror if applied
+        const style = window.getComputedStyle(video);
+        const transform = style.transform || "none";
+        if (transform.includes("-1")) {
+            ctx.translate(cw, 0);
+            ctx.scale(-1, 1);
+        }
+
+        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, cw, ch);
+
+        // Save or share
+        if (window.innerWidth < 600 && navigator.share) {
+            // Mobile: try Web Share API
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+                const file = new File([blob], 'IMG_1258.png', { type: 'image/png' });
+
+                navigator.share({
+                    files: [file],
+                    title: 'Shot on Iphone',
+                    text: 'love myspacemark'
+                }).catch(err => {
+                    console.log('Share failed, opening preview instead:', err);
+                    const url = URL.createObjectURL(blob);
+                    window.open(url, '_blank'); // fallback
+                });
+            }, 'image/png');
+        } else {
+            // Desktop fallback: download
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `shot-${Date.now()}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }, "image/png");
+        }
+    });
+
+</script>
+
+<script>
+    function turnonnote() {
+        // fademain();
+
+        document.getElementById("main").style.display = "none"
+        document.getElementById("notediv").style.display = "block"
+
+    }
+
+    function turnoffnote() {
+        document.getElementById("notediv").style.display = "none"
+
+        document.getElementById("main").style.display = "flex";
+
+    }
+</script>
+
+<script>
+    function fademain() {
+        document.getElementById("iphonediv").style.opacity = "0";
+    }
+</script>
+
+<script>
+    //CAMERA PROJECT
+    const cameraDiv = document.getElementById("cameradiv");
+
+    function turnoncamera() {
+        fademain();
+
+        cameraDiv.style.display = "flex";
+        video.autoplay = true;
+        video.playsInline = true;
+
+        startCamera("user");
+
+    }
+
+    function turnoffcamera() {
+
+        cameraDiv.style.display = "none";
+        document.getElementById("iphonediv").style.display = "flex";
+        document.getElementById("iphonediv").style.opacity = "1";
+    }
+
+</script>
+
+<script>
+    let switchBtn = document.getElementById("switchcamera");
+    let currentStream = null;
+    let usingFrontCamera = true; // start with front camera
+
+    async function startCamera(facingMode = "user") {
+        try {
+            // Stop any existing streams
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+
+            // Request media
+            currentStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: facingMode },
+                audio: false
+            });
+
+            video.srcObject = currentStream;
+
+            // Mirror front camera
+            if (facingMode === "user") {
+                video.style.transform = "scaleX(-1)";
+            } else {
+                video.style.transform = "scaleX(1)";
+            }
+
+            usingFrontCamera = facingMode === "user";
+
+        } catch (err) {
+            console.warn("No back/front camera or error:", err);
+            // Desktop fallback: just flip horizontally
+            video.style.transform = usingFrontCamera ? "scaleX(1)" : "scaleX(-1)";
+            usingFrontCamera = !usingFrontCamera;
+        }
+    }
+
+    // Initial camera
+
+    switchBtn.addEventListener("click", () => {
+        // Flip between front and back if available
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            const newFacing = usingFrontCamera ? "environment" : "user";
+            startCamera(newFacing);
+        } else {
+            // Fallback for desktop
+            video.style.transform = usingFrontCamera ? "scaleX(1)" : "scaleX(-1)";
+            usingFrontCamera = !usingFrontCamera;
+        }
+    });
+</script>
+<script>
+    const slider = document.getElementById("slider");
+    const slide = document.getElementById("slide");
+
+    let opened = false;
+
+    let isDragging = false;
+    let startX = 0;
+    let startLeft = 0;
+
+    const unlockSound = new Audio('sounds/unlock.MP3');
+
+    function start(e) {
+        isDragging = true;
+        slider.classList.add("dragging");
+        startX = (e.touches ? e.touches[0].clientX : e.clientX);
+        startLeft = slider.offsetLeft;
+
+    }
+
+    function move(e) {
+        if (!isDragging) return;
+
+        const x = (e.touches ? e.touches[0].clientX : e.clientX);
+        let newLeft = startLeft + (x - startX);
+
+        newLeft = Math.max(0, Math.min(newLeft, slide.clientWidth - slider.clientWidth));
+        slider.style.left = newLeft + "px";
+
+        //opacity
+        const unlockText = document.getElementById("unlocktext");
+        const maxLeft = slide.clientWidth - slider.clientWidth;
+        let opacity = 1 - (newLeft / maxLeft) * 2;
+        opacity = Math.max(0, Math.min(1, opacity));
+        unlockText.style.opacity = opacity;
+    }
+
+    const unlock = document.getElementById("unlock");
+    const main = document.getElementById("main");
+    const tops = document.getElementById("top");
+
+    function stop() {
+        if (!isDragging) return;
+        isDragging = false;
+        slider.classList.remove("dragging");
+
+        const max = slide.clientWidth - slider.clientWidth;
+        const position = slider.offsetLeft;
+
+        if (position > max / 2) {
+            // Snap Right
+            slider.style.left = max + "px";
+
+            setTimeout(() => {
+                // alert("hi");
+
+                unlockSound.currentTime = 0;
+                unlockSound.play();
+
+                opened = true;
+
+                unlock.style.animation = 'unlockExpand 0.3s ease-in-out forwards';
+                setTimeout(() => {
+                    unlock.style.display = "none"
+                    main.style.display = "flex"
+                    updateTime();
+
+                    tops.style.background = "rgba(0,0,0,0.7)";
+
+                }, 300);
+
+            }, 300);
+        } else {
+            // Snap Left
+            slider.style.left = "0px";
+        }
+    }
+
+    slider.addEventListener("mousedown", start);
+    slider.addEventListener("touchstart", start);
+
+    document.addEventListener("mousemove", move);
+    document.addEventListener("touchmove", move, { passive: false });
+
+    document.addEventListener("mouseup", stop);
+    document.addEventListener("touchend", stop);
+
+</script>
+<script>
+    const locktime = document.getElementById("locktime");
+    function updateTime() {
+        const timeEl = document.getElementById("time");
+        const now = new Date();
+
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+
+        // Optional: leading zero for nicer format
+        if (hours < 10) hours = "0" + hours;
+        if (minutes < 10) minutes = "0" + minutes;
+
+        timeEl.textContent = `${hours}:${minutes}`;
+        if (opened === true) {
+            let displayHours = now.getHours();
+            let period = displayHours >= 12 ? "PM" : "AM";
+
+            displayHours = displayHours % 12 || 12;
+
+            locktime.textContent = `${displayHours}:${minutes} ${period}`;
+        }
+    }
+
+    // Run instantly
+    updateTime();
+    // Update every second
+    setInterval(updateTime, 1000);
+
+</script>
+<script>
+    function updateDate() {
+        const dateEl = document.getElementById("date");
+        const now = new Date();
+
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const day = days[now.getDay()];
+        const month = months[now.getMonth()];
+        const date = now.getDate();
+
+        dateEl.textContent = `${day}, ${month} ${date}`;
+    }
+
+    updateDate(); // run once on load
+
+</script>
+
+<script>
+    if (window.innerWidth >= 600 && window.self === window.top) {
+        document.body.innerHTML = `
+            <style>
+                * { margin: 0; padding: 0; }
+                body { 
+                    background: black; 
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center; 
+                    height: 100vh;
+                    overflow: hidden;
+                }
+                iframe {
+                    width: 390px;
+                    height: 100dvh;
+                    border: none;
+                    border-radius: 1vw;
+                    overflow: hidden;
+                }
+            </style>
+            <iframe src="${window.location.href}?mobile=1"></iframe>
+        `;
+    }
+</script>
+</body>
+</html>
